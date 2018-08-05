@@ -34,7 +34,7 @@ module TreeCata =
         { new TreeCata<_> with
             member __.Empty () = "Empty"
             member __.Leaf x = x.ToString ()
-            member __.Branch l r = sprintf "BRANCH (%s. %s)" l r
+            member __.Branch l r = sprintf "BRANCH (%s, %s)" l r
         }
 
     let rec cata (c : TreeCata<'a>) (tree : 'b Tree) : 'a =
