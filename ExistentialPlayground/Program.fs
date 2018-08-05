@@ -10,8 +10,8 @@ let main argv =
     let c = TreeCata.makeLeaf 'c'
 
     let tree = Branch (Branch (four, c), Branch(five, Branch(nine, Empty)))
-    let t2 = TreeCata.cata TreeCata.identityCata tree
-    printfn "%s" <| TreeCata.cata TreeCata.stringCata tree
-    printfn "%s" <| TreeCata.cata TreeCata.stringCata t2
+    let t2 = TreeCata.cata TreeCata.identity tree
+    printfn "%s" <| TreeCata.cata TreeCata.toString tree
+    printfn "%s" <| TreeCata.cata TreeCata.toString t2
 
     0

@@ -23,14 +23,14 @@ module TreeCata =
             member __.Bind evalr = evalr.Eval x
         } |> Leaf
 
-    let identityCata<'a> : TreeCata<'a Tree> =
+    let identity<'a> : TreeCata<'a Tree> =
         { new TreeCata<_> with
             member __.Empty () = Empty
             member __.Leaf x = makeLeaf x
             member __.Branch l r = Branch (l,r)
         }
 
-    let stringCata : TreeCata<string> =
+    let toString : TreeCata<string> =
         { new TreeCata<_> with
             member __.Empty () = "Empty"
             member __.Leaf x = x.ToString ()
