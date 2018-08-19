@@ -5,6 +5,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Teq.fs" />
+    <Compile Include="HList.fs" />
     <Compile Include="TreeCata.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
