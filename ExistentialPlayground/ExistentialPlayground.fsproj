@@ -1,13 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
-
   <ItemGroup>
+    <Compile Include="Teq.fs" />
     <Compile Include="TreeCata.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
-
 </Project>
