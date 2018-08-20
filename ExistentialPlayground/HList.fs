@@ -13,7 +13,7 @@ and HListEvaluator<'a, 'r> =
 module HList =
 
     let private lift (t : Teq<'a, 'b>) : Teq<HList<'a>, HList<'b>> =
-        unbox Teq.believeMe
+        Teq.believeMe
 
     let empty : HList<unit> = Teq.refl<unit> |> End
 
