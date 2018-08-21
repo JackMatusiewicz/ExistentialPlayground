@@ -4,6 +4,7 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="State.fs" />
     <Compile Include="Teq.fs" />
     <Compile Include="HList.fs" />
     <Compile Include="TreeCata.fs" />
