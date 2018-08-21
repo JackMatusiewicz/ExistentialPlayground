@@ -34,3 +34,15 @@ module HList =
                         let t3 = Teq.codomain teq |> lift
                         (v |> Teq.castTo t2), (tail |> Teq.castTo t3)
                 }
+
+    let apply<'a, 'b, 'c> (f : 'a -> 'c) (h : HList<'a -> 'b>) : 'c * HList<'b> =
+        match h with
+        | End _ -> failwith "Impossible"
+        | Cons h ->
+            h.Bind<'c * HList<'b>>
+                { new HListEvaluator<'a -> 'b, 'c * HList<'b>> with
+                    member __.Eval v tail teq =
+                        let t2 = Teq.domain teq
+                        let t3 = Teq.codomain teq |> lift
+                        (v |> Teq.castTo t2 |> f, tail |> Teq.castTo t3)
+                }

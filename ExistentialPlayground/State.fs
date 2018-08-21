@@ -26,11 +26,16 @@ module State =
             (f a, finS)
 
     let bind
-        (f : 'a -> State<'s, 'b>)
         (v : State<'s, 'a>)
+        (f : 'a -> State<'s, 'b>)
         : State<'s, 'b>
         =
         fun s ->
             let (a, s) = v s
             let sb = f a
             sb s
+
+    module Operators =
+        let (<!>) = map
+        let (<*>) = apply
+        let (=<<) = bind
