@@ -25,7 +25,7 @@ module HList =
 
     let head<'a, 'b> (h : HList<'a -> 'b>) : 'a * HList<'b> =
         match h with
-        | End _ -> failwith "Impossible"
+        | End _ -> failwith "Impossible - we have a proof the generic type isn't Unit"
         | Cons h ->
             h.Bind<'a * HList<'b>>
                 { new HListEvaluator<'a -> 'b, 'a * HList<'b>> with
@@ -37,7 +37,7 @@ module HList =
 
     let apply<'a, 'b, 'c> (f : 'a -> 'c) (h : HList<'a -> 'b>) : 'c * HList<'b> =
         match h with
-        | End _ -> failwith "Impossible"
+        | End _ -> failwith "Impossible - we have a proof the generic type isn't Unit"
         | Cons h ->
             h.Bind<'c * HList<'b>>
                 { new HListEvaluator<'a -> 'b, 'c * HList<'b>> with
