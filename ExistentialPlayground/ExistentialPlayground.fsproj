@@ -7,6 +7,7 @@
     <Compile Include="State.fs" />
     <Compile Include="Teq.fs" />
     <Compile Include="HList.fs" />
+    <Compile Include="Scratch.fs" />
     <Compile Include="TreeCata.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
