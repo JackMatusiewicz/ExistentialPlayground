@@ -5,10 +5,13 @@ type HList<'a> =
     | Cons of HListCrate<'a>
 
 and HListCrate<'a> =
-    abstract member Bind<'r> : HListEvaluator<'a, 'r> -> 'r
+    abstract member Apply<'r> : HListEvaluator<'a, 'r> -> 'r
 
 and HListEvaluator<'a, 'r> =
     abstract member Eval : 'b -> 'c HList -> Teq<'a, 'b -> 'c> -> 'r
+
+type HListFolder<'state> =
+    abstract member Fold<'a> : 'state -> 'a -> 'state
 
 module HList =
 
@@ -19,7 +22,7 @@ module HList =
 
     let cons (v : 'a) (tail : HList<'b>) : HList<'a -> 'b> =
         { new HListCrate<'a -> 'b> with
-            member __.Bind<'r> (evaluator : HListEvaluator<('a -> 'b), 'r>) =
+            member __.Apply<'r> (evaluator : HListEvaluator<('a -> 'b), 'r>) =
                 evaluator.Eval v tail Teq.refl<'a -> 'b>
         } |> Cons
 
@@ -27,7 +30,7 @@ module HList =
         match h with
         | End _ -> failwith "Impossible - we have a proof the generic type isn't Unit"
         | Cons h ->
-            h.Bind<'a * HList<'b>>
+            h.Apply<'a * HList<'b>>
                 { new HListEvaluator<'a -> 'b, 'a * HList<'b>> with
                     member __.Eval v tail teq =
                         let t2 = Teq.domain teq
@@ -39,10 +42,25 @@ module HList =
         match h with
         | End _ -> failwith "Impossible - we have a proof the generic type isn't Unit"
         | Cons h ->
-            h.Bind<'c * HList<'b>>
+            h.Apply<'c * HList<'b>>
                 { new HListEvaluator<'a -> 'b, 'c * HList<'b>> with
                     member __.Eval v tail teq =
                         let t2 = Teq.domain teq
                         let t3 = Teq.codomain teq |> lift
                         (v |> Teq.castFrom t2 |> f, tail |> Teq.castFrom t3)
                 }
+
+    let rec fold<'a, 'state>
+        (list : 'a HList)
+        (acc : 'state)
+        (folder : 'state HListFolder)
+        : 'state
+        =
+        match list with
+        | End _ -> acc
+        | Cons hc ->
+            hc.Apply { new HListEvaluator<'a, 'state> with
+                member __.Eval<'b, 'c> (v :'b) (tail : 'c HList) teq =
+                    let newAcc = folder.Fold<'b> acc v
+                    fold<'c, 'state> tail newAcc folder
+            }

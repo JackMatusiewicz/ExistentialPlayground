@@ -14,4 +14,4 @@ module Teq =
     let domain (_ : Teq<'a -> 'b, 'c -> 'd>) : Teq<'a, 'c> = believeMe
     let codomain (_ : Teq<'a -> 'b, 'c -> 'd>) : Teq<'b, 'd> = believeMe
 
-    let extendFunction<'a, 'b, 'c> (_ : Teq<'a -> 'b, 'd>) : Teq<'a -> 'b -> 'c, 'd -> 'c> = believeMe
+    let extendFunction<'a, 'b, 'c, 'd> (_ : Teq<'a -> 'b, 'd>) : Teq<'a -> 'b -> 'c, 'd -> 'c> = believeMe
